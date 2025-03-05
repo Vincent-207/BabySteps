@@ -4231,7 +4231,7 @@ MonoBehaviour:
   - {fileID: 604976572}
   - {fileID: 403021023}
   - {fileID: 1994474771}
-  newMaxAngularVelocity: 5
+  newMaxAngularVelocity: 10
 --- !u!1 &1994474770
 GameObject:
   m_ObjectHideFlags: 0
