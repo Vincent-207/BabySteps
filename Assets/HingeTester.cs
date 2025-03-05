@@ -5,7 +5,7 @@ using UnityEngine;
 public class HingeTester : MonoBehaviour
 {
     [SerializeField]
-    Rigidbody leftArmRB, rightArmRB;
+    Rigidbody leftArmRB, rightArmRB, leftLegRB, rightLegRB;
     [SerializeField]
     Vector3 torqueDir;
     // Start is called before the first frame update
@@ -19,12 +19,12 @@ public class HingeTester : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.R))
         {
-            leftArmRB.AddTorque(torqueDir, ForceMode.Impulse);
+            leftArmRB.AddRelativeTorque(torqueDir, ForceMode.Impulse);
             Debug.Log("Adding Torque left arm");
         }
         else if(Input.GetKey(KeyCode.F))
         {
-            leftArmRB.AddTorque(-torqueDir, ForceMode.Impulse);
+            leftArmRB.AddRelativeTorque(-torqueDir, ForceMode.Impulse);
             Debug.Log("Adding reverse Torque left arm");
         }
 
@@ -45,9 +45,26 @@ public class HingeTester : MonoBehaviour
         {
             
             Debug.Log("Adding Torque both arms");
-            rightArmRB.AddTorque(torqueDir, ForceMode.Force);
-            leftArmRB.AddTorque(torqueDir, ForceMode.Force);
+            rightArmRB.AddRelativeTorque(torqueDir, ForceMode.Force);
+            leftArmRB.AddRelativeTorque(torqueDir, ForceMode.Force);
+            
+        }
+
+        if(Input.GetKey(KeyCode.T))
+        {
+            
+            Debug.Log("Adding Torque both arms");
+            leftLegRB.AddRelativeTorque(torqueDir, ForceMode.Force);
+            rightLegRB.AddRelativeTorque(torqueDir, ForceMode.Force);
             
         }
     }
+
+    void SpinLeft(Vector3 torqueVector, ForceMode forceMode)
+    {
+        leftArmRB.AddRelativeTorque(torqueVector, forceMode);
+        leftLegRB.AddRelativeTorque(torqueVector, forceMode);
+    }
+
+    
 }
