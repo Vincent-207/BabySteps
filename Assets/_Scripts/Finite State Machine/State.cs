@@ -19,7 +19,7 @@ public abstract class State
     
     protected virtual void OnEnter()
     {
-        statePhase = StatePhase.enter;
+        statePhase = StatePhase.update;
     }
 
     protected virtual void OnUpdate()
@@ -28,7 +28,7 @@ public abstract class State
         {
             if(transitions[i].condition())
             {
-                // If can transistion set to nextSate corresponding nextState. Set phase to exit. 
+                // If can transistion set nextSate to corresponding nextState. Set phase to exit. 
                 nextState = transitions[i].nextState;
                 statePhase = StatePhase.exit;
 
