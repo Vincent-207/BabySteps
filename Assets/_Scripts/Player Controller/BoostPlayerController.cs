@@ -5,11 +5,10 @@ using UnityEngine;
 public class BoostPlayerController : MonoBehaviour
 {
     public Rigidbody babyRB, leftArmRB, rightArmRB;
-    public Vector3 armTurnDir, rollDir, boostForce;
+    public Vector3 armTurnDir, rollDir;
     public GameObject leftArm, rightArm;
-    public float armTurnPower, rollPower, boostPower;
+    public float armTurnPower, rollPower;
     public ForceMode armForceMode, bodyForceMode;
-    public Collider leftArmCol, rightArmCol;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +20,7 @@ public class BoostPlayerController : MonoBehaviour
     {
         HandleArmInput();
         HandleRoll();
-        HandleBoost();
+
     }
 
     void HandleArmInput()
@@ -57,16 +56,5 @@ public class BoostPlayerController : MonoBehaviour
         }
     }
 
-    void HandleBoost()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 babyUp = babyRB.transform.up;
-            Vector3 boostDir = new Vector3(babyUp.x, .5f, babyUp.z);
-            babyRB.AddForce(boostDir * boostPower);
-           
-        }
-
-
-    }
+    
 }
