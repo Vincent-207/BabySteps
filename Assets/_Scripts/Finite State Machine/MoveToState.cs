@@ -1,17 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
 public class MoveToState : State
 {
     NavMeshAgent navAgent;
     Waypoint waypoint;
+    Vector3 target;
+    Vector3 targetPosition;
+    BasicFSM stateMachine;
+    ITargetFSM targetFSM;
+    float distanceThreshold;
     
-    bool closeToWaypoint()
+    public bool closeToWaypoint()
     {
-        if(navAgent.transform.position.x == waypoint.position.x && navAgent.transform.position.z == waypoint.position.z)
+        
+        Vector3 toWaypoint = target - navAgent.transform.position;
+        float distance = toWaypoint.magnitude;
+        
+        if(distance <= distanceThreshold + .1)
         {
             Debug.Log("Close to waypoint!");
             return true;
@@ -21,23 +33,41 @@ public class MoveToState : State
         }
     }
 
-    public MoveToState(NavMeshAgent agent, Waypoint point)
+    private void SetTargetPos()
     {
-        navAgent = agent;
-        waypoint = point;
-        
-        transitions.Add(new Transition(closeToWaypoint, new WaitState(point.waitTime)));
+        target = targetFSM.GetTarget();
+        navAgent.SetDestination(target);
+        targetPosition = target;
     }
-    protected override void OnExit()
+
+    public MoveToState(NavMeshAgent navAgent, ITargetFSM targetFSM, float distanceThreshold = 1f)
     {
-        Debug.LogWarning("Go to point!");
-        base.OnExit();
+        //stateMachine = FSM;
+        this.navAgent = navAgent;
+        this.targetFSM = targetFSM;
+        this.distanceThreshold = distanceThreshold;
+        
+        //transitions.Add(new Transition(closeToWaypoint, new WaitState(FSM)));
     }
     protected override void OnEnter()
     {
-        base.OnEnter();
-        navAgent.SetDestination(waypoint.position);
+        navAgent.enabled = true;
+        target = targetFSM.GetTarget();
+        SetTargetPos();
         Debug.Log("Set Destination!");
+        base.OnEnter();
+    }
+
+    protected override void OnUpdate()
+    {
+        
+        base.OnUpdate();
+    }
+    protected override void OnExit()
+    {
+        navAgent.enabled = false;
+        Debug.LogWarning("Got to point!");
+        base.OnExit();
     }
 
 

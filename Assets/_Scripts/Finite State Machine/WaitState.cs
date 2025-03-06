@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class WaitState : State
 {
     float waitTime;
     float startTime;
-    public WaitState(float waitTime)
+    BasicFSM stateMachine;
+    public WaitState(BasicFSM FSM)
     {
-        
+        stateMachine = FSM;
         startTime = Time.time;
-        this.waitTime = waitTime;
-        //transitions.Add(new Transition(isDoneWaiting, new MoveToState(FSM.navAgent, FSM)));
+        this.waitTime = FSM.getCurrentWaypoint().waitTime;
+        Debug.Log("WaitTime of : " + waitTime);
+        Debug.Break();
+        //transitions.Add(new Transition(isDoneWaiting, new MoveToState(FSM)));
     }
 
     
-    bool isDoneWaiting()
+    public bool isDoneWaiting()
     {
+
         if(Time.time >= waitTime + startTime)
         {
             
@@ -25,7 +30,22 @@ public class WaitState : State
         return false;
     }
 
-    
+    protected override void OnEnter()
+    {
+        waitTime = stateMachine.getCurrentWaypoint().waitTime;
+        startTime = Time.time;
+        Debug.Log("Starting wait of " + waitTime);
+        base.OnEnter();
+    }
+
+    protected override void OnExit()
+    {
+        Debug.Log("Ending Wait!");
+        stateMachine.incrementPoint();
+        base.OnExit();
+    }
+
+
 
 
 }

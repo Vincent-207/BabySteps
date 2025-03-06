@@ -8,6 +8,7 @@ public class StateTester : MonoBehaviour
 {
     public Waypoint[] waypoints;
     NavMeshAgent navAgent;
+    [SerializeField]
     BasicFSM bFSM;
 
     public void Start()

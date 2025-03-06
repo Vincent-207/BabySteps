@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BasicFSM : FiniteStateMachine
+[System.Serializable]
+public class BasicFSM : FiniteStateMachine, ITargetFSM
 {
-    Waypoint waypoint;
     Waypoint[] waypoints;
-    int currentPoint = 0;
+    public int currentPoint = 0;
+    MoveToState moveState;
+    WaitState waitState;
+    [SerializeField]
+    State CurrentState;
 
     public NavMeshAgent navAgent;
+    public float abba = 5;
+    public State myState;
+
     public BasicFSM(NavMeshAgent navAgent, Waypoint[] points)
     {
-        Debug.Log("Starting ctor!");
-        this.navAgent = navAgent;
         waypoints = points;
-        Debug.Log("Set Current State");
-        currentState = new MoveToState(navAgent, waypoints[currentPoint]);
-        
+        CurrentState = currentState = moveState = new MoveToState(navAgent, this);
+        waitState = new WaitState(this);
+
+        moveState.transitions.Add(new Transition(moveState.closeToWaypoint, waitState));
+        waitState.transitions.Add(new Transition(waitState.isDoneWaiting, moveState));
     }
+
+
 
     public Waypoint getCurrentWaypoint()
     {
@@ -28,15 +37,16 @@ public class BasicFSM : FiniteStateMachine
     public void incrementPoint()
     {
         currentPoint+= 1;
-        if(currentPoint <= waypoints.Length)
+        if(currentPoint >= waypoints.Length)
         {
             currentPoint = 0;
         }
-
-        currentState = new MoveToState(navAgent, waypoints[currentPoint]);
-
     }
 
+    public Vector3 GetTarget()
+    {
+        return getCurrentWaypoint().position;
+    }
 
 
     protected override void OnEnter()
