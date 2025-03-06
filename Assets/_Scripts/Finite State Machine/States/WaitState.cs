@@ -13,8 +13,8 @@ public class WaitState : State
         stateMachine = FSM;
         startTime = Time.time;
         this.waitTime = FSM.getCurrentWaypoint().waitTime;
-        Debug.Log("WaitTime of : " + waitTime);
-        Debug.Break();
+        //Debug.Log("WaitTime of : " + waitTime);
+        //Debug.Break();
         //transitions.Add(new Transition(isDoneWaiting, new MoveToState(FSM)));
     }
 
