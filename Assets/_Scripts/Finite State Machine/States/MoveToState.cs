@@ -25,7 +25,7 @@ public class MoveToState : State
         
         if(distance <= distanceThreshold + .1)
         {
-            Debug.Log("Close to waypoint!");
+            //Debug.Log("Close to waypoint!");
             return true;
         }
         else{
@@ -54,7 +54,7 @@ public class MoveToState : State
         navAgent.enabled = true;
         target = targetFSM.GetTarget();
         SetTargetPos();
-        Debug.Log("Set Destination!");
+        //Debug.Log("Set Destination!");
         base.OnEnter();
     }
 
@@ -66,7 +66,7 @@ public class MoveToState : State
     protected override void OnExit()
     {
         navAgent.enabled = false;
-        Debug.LogWarning("Got to point!");
+        //Debug.LogWarning("Got to point!");
         base.OnExit();
     }
 

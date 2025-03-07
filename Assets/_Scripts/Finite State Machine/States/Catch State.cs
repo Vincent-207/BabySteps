@@ -11,7 +11,7 @@ public class CatchState : State
     NavMeshAgent navAgent;
     ITargetFSM chaseFSM;
 
-    public CatchState(Vector3 lastSeen, ITargetFSM chaseFSM, NavMeshAgent agent, float recalc = 1.0f)
+    public CatchState(Vector3 lastSeen, ITargetFSM chaseFSM, NavMeshAgent agent, float recalc = 0.1f)
     {
         lastSeenPlayerPos = lastSeen;
         recalcThreshould = recalc;
@@ -28,10 +28,12 @@ public class CatchState : State
 
     protected override void OnUpdate()
     {
+        Debug.DrawLine(navAgent.transform.position, lastSeenPlayerPos, Color.green);
         Vector3 accurateLastSeen = chaseFSM.GetTarget();
         float distance = (lastSeenPlayerPos - accurateLastSeen).magnitude;
         if(distance >= recalcThreshould)
         {
+            Debug.DrawLine(navAgent.transform.position, accurateLastSeen, Color.blue);
             lastSeenPlayerPos = accurateLastSeen;
             navAgent.SetDestination(lastSeenPlayerPos);
         }

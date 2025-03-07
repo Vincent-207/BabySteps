@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerDetector : MonoBehaviour
 {
     [SerializeField]
-    GenerateFlatCone coneGen;
+    IMeshGen coneGen;
     Mesh viewCone;
     MeshFilter meshFilter;
     MeshCollider viewCol;
@@ -19,7 +19,8 @@ public class PlayerDetector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        viewCone = coneGen.getCone();
+        coneGen = GetComponent<IMeshGen>();
+        viewCone = coneGen.GetMesh();
         meshFilter = GetComponent<MeshFilter>();
         meshFilter.mesh = viewCone;
         viewCol = GetComponent<MeshCollider>();
@@ -38,7 +39,11 @@ public class PlayerDetector : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        //
+        if(other.CompareTag("Player"))
+        {
+            detectedPlayer(other);
+
+        }
     }
     void OnTriggerExit(Collider other)
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateFlatCone : MonoBehaviour
+public class GenerateFlatCone : MonoBehaviour, IMeshGen
 {
     [SerializeField]
     Mesh mesh;
@@ -29,7 +29,7 @@ public class GenerateFlatCone : MonoBehaviour
         
     }
 
-    public Mesh getCone()
+    public Mesh GetMesh()
     {
         return mesh;
     }
@@ -69,12 +69,12 @@ public class GenerateFlatCone : MonoBehaviour
             
             vertAngles[vertIndex] = vertAngle;
             vertAngles[vertIndex + 1] = vertAngle;
-            vertices[vertIndex] = new Vector3(Mathf.Cos(vertAngle * Mathf.Deg2Rad) * radius , 0, Mathf.Sin(vertAngle * Mathf.Deg2Rad) * radius);
+            vertices[vertIndex] = Quaternion.Euler(0, -90, 0) * new Vector3(Mathf.Cos(vertAngle * Mathf.Deg2Rad) * radius , 0, Mathf.Sin(vertAngle * Mathf.Deg2Rad) * radius);
             if(vertIndex + 1 >= vertices.Length)
             {
                 break;
             }
-            vertices[vertIndex + 1] = new Vector3(Mathf.Cos(vertAngle  * Mathf.Deg2Rad) * radius  , getHeight(), Mathf.Sin(vertAngle* Mathf.Deg2Rad) * radius);
+            vertices[vertIndex + 1] = Quaternion.Euler(0, -90, 0) * new Vector3(Mathf.Cos(vertAngle  * Mathf.Deg2Rad) * radius  , getHeight(), Mathf.Sin(vertAngle* Mathf.Deg2Rad) * radius);
             
         }
 
