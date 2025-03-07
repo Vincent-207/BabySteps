@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/CoreLoop.unity
+    guid: bc539d3d5acbe954fa259c911b044daf
   m_configObjects: {}

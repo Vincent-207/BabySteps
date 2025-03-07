@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerJump : MonoBehaviour
 {
     [SerializeField]
+    RectTransform jumpBar;
+    [SerializeField]
+    float barHeight, maxWidth;
+    [SerializeField]
     float jumpPower, jumpChargeTime, JumpCooldownTime, minJumpCharge;
 
     [SerializeField]
@@ -24,6 +28,7 @@ public class PlayerJump : MonoBehaviour
             jumpChargeAmount += Time.deltaTime / jumpChargeTime;
             jumpChargeAmount = Mathf.Clamp(jumpChargeAmount, 0, 1);
             Debug.Log("Jump Charge: " + jumpChargeAmount);
+            jumpBar.sizeDelta = new Vector2(maxWidth * jumpChargeAmount, barHeight);
         }
         else if(Input.GetKeyUp(KeyCode.Space) )
         {

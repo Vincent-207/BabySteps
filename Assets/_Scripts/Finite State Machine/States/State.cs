@@ -60,7 +60,7 @@ public abstract class State
         else if(statePhase == StatePhase.interrupted)
         {
             OnExit();
-            Debug.LogWarning("What the flip dude. Don't interrupt me " + this);
+            //Debug.LogWarning("What the flip dude. Don't interrupt me " + this);
             // Reset state phase for when we come back to this state.
             statePhase = StatePhase.enter;
         }

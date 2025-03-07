@@ -51,7 +51,7 @@ public class BasicFSM : FiniteStateMachine, ITargetFSM
 
     protected override void OnEnter()
     {
-        Debug.Log("Basic FSM Entered!");
+        //Debug.Log("Basic FSM Entered!");
         base.OnEnter();
     }
 }

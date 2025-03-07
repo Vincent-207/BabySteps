@@ -34,13 +34,13 @@ public class WaitState : State
     {
         waitTime = stateMachine.getCurrentWaypoint().waitTime;
         startTime = Time.time;
-        Debug.Log("Starting wait of " + waitTime);
+        //Debug.Log("Starting wait of " + waitTime);
         base.OnEnter();
     }
 
     protected override void OnExit()
     {
-        Debug.Log("Ending Wait!");
+        //Debug.Log("Ending Wait!");
         stateMachine.incrementPoint();
         base.OnExit();
     }
