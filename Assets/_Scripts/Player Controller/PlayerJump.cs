@@ -22,7 +22,7 @@ public class PlayerJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            Debug.DrawRay(Vector3.zero, playerMainBody.transform.forward * 10, Color.red, .1f);
+        Debug.DrawRay(Vector3.zero, playerMainBody.transform.forward * 10, Color.red, .1f);
         if(Input.GetKey(KeyCode.Space) && validJump())
         {
             jumpChargeAmount += Time.deltaTime ;

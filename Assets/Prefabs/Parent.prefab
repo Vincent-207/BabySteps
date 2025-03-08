@@ -167,6 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5af08756e4d964fb59e36e7fbc9dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eyePos: {x: 0, y: 1, z: 0}
+  viewBlockingLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!64 &8442636507235017380
 MeshCollider:
   m_ObjectHideFlags: 0

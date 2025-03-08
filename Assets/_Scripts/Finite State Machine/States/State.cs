@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -73,5 +74,10 @@ public abstract class State
         }
 
         return this;
+    }
+
+    public override String ToString()
+    {
+        return "Abstract State";
     }
 }

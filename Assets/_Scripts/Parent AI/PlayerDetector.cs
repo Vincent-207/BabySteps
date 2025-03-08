@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerDetector : MonoBehaviour
 {
     [SerializeField]
+    Vector3 eyePos;
+    [SerializeField]
+    LayerMask viewBlockingLayers;
     IMeshGen coneGen;
     Mesh viewCone;
     MeshFilter meshFilter;
@@ -12,13 +15,14 @@ public class PlayerDetector : MonoBehaviour
     
 
     // Chase variables
-    static float lastDetectedPlayerTime;
+    static float lastDetectedPlayerTime = -5;
     public static float playerChaseTime = 5;
     public static Vector3 lastSeenPlayerPos = new Vector3();
     static bool canSeePlayer = false;
     // Start is called before the first frame update
     void Start()
     {
+        
         coneGen = GetComponent<IMeshGen>();
         viewCone = coneGen.GetMesh();
         meshFilter = GetComponent<MeshFilter>();
@@ -31,7 +35,7 @@ public class PlayerDetector : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger entered by : " + other.name);
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && isPlayerViewable(other))
         {
             detectedPlayer(other);
             canSeePlayer = true;
@@ -39,7 +43,7 @@ public class PlayerDetector : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && isPlayerViewable(other))
         {
             detectedPlayer(other);
 
@@ -47,7 +51,7 @@ public class PlayerDetector : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && isPlayerViewable(other))
         {
             detectedPlayer(other);
             canSeePlayer = false;
@@ -55,9 +59,10 @@ public class PlayerDetector : MonoBehaviour
     }
     private void detectedPlayer(Collider playerCol)
     {
+        Debug.DrawLine(transform.position, playerCol.transform.position, Color.yellow, 50f);
         lastSeenPlayerPos = playerCol.transform.position;
         lastDetectedPlayerTime = Time.time;
-        Debug.Log("Saw player!");
+        //Debug.Log("Saw player!");
     }
 
     public static bool huntingPlayer()
@@ -82,6 +87,23 @@ public class PlayerDetector : MonoBehaviour
     {
         return lastSeenPlayerPos;
     }
+
+    private bool isPlayerViewable(Collider other)
+    {
+        bool isViewBlocked = Physics.Linecast(transform.position + eyePos, other.transform.position, viewBlockingLayers);
+        if(isViewBlocked)
+        {
+            canSeePlayer = false;
+            Debug.Log("Blocking Object");
+        }
+        else
+        {
+            canSeePlayer = true;
+        }
+
+        return !isViewBlocked;
+    }
+
 
     
 }

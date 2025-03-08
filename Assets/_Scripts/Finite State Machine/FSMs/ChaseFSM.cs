@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,5 +29,11 @@ public class ChaseFSM : FiniteStateMachine, ITargetFSM
     public Vector3 GetTarget()
     {
         return PlayerDetector.getLastSeen();
+    }
+
+    public override String ToString()
+    {
+        return "Chase State";
+
     }
 }

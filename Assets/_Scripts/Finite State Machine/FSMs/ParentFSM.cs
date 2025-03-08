@@ -21,7 +21,11 @@ public class ParentFSM : FiniteStateMachine
         chaseFSM.transitions.Add(new Transition(endChase, patrolFSM));
 
     }
-
+    protected override void OnUpdate()
+    {
+        Debug.Log("Current State: " + currentState);
+        base.OnUpdate();
+    }
     bool endChase()
     {
         return !PlayerDetector.huntingPlayer();
