@@ -7,6 +7,7 @@ public class PlayerJump : MonoBehaviour
     
     [SerializeField]
     float jumpPower, jumpChargeTime, JumpCooldownTime, minJumpCharge;
+    public bool grounded = false;
 
     [SerializeField]
     Rigidbody playerMainBody;
@@ -15,31 +16,36 @@ public class PlayerJump : MonoBehaviour
     void Start()
     {
         
+
     }
 
     // Update is called once per frame
     void Update()
     {
+            Debug.DrawRay(Vector3.zero, playerMainBody.transform.forward * 10, Color.red, .1f);
         if(Input.GetKey(KeyCode.Space) && validJump())
         {
-            jumpChargeAmount += Time.deltaTime / jumpChargeTime;
+            jumpChargeAmount += Time.deltaTime ;
             jumpChargeAmount = Mathf.Clamp(jumpChargeAmount, 0, 1);
             Debug.Log("Jump Charge: " + jumpChargeAmount);
             
         }
-        else if(Input.GetKeyUp(KeyCode.Space) )
+        else if(Input.GetKeyUp(KeyCode.Space) && grounded)
         {
             Debug.Log("checking jump!");
             if(jumpChargeAmount >= minJumpCharge)
             {
                 Debug.Log("Jumping!");  
-                playerMainBody.AddForce((playerMainBody.transform.up * jumpPower) * jumpChargeAmount, ForceMode.Impulse);   
+                Vector3 jumpVector = (playerMainBody.transform.forward * jumpPower) * jumpChargeAmount;
+                Debug.DrawRay(playerMainBody.transform.position, jumpVector, Color.red);
+                playerMainBody.AddForce(jumpVector, ForceMode.Impulse);   
                 lastJumpTime = Time.time;
             }
             
             jumpChargeAmount = 0;
 
         }
+        
     }
 
     public float getJumpCharge()
@@ -51,7 +57,11 @@ public class PlayerJump : MonoBehaviour
     {
         if( Time.time >= lastJumpTime + JumpCooldownTime)
         {
-            return true;
+            if(grounded)
+            {
+                return true;
+
+            }
         }
 
         return false;
