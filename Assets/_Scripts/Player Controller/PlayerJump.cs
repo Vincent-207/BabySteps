@@ -27,15 +27,15 @@ public class PlayerJump : MonoBehaviour
         {
             jumpChargeAmount += Time.deltaTime ;
             jumpChargeAmount = Mathf.Clamp(jumpChargeAmount, 0, 1);
-            Debug.Log("Jump Charge: " + jumpChargeAmount);
+            //Debug.Log("Jump Charge: " + jumpChargeAmount);
             
         }
         else if(Input.GetKeyUp(KeyCode.Space) && grounded)
         {
-            Debug.Log("checking jump!");
+            //Debug.Log("checking jump!");
             if(jumpChargeAmount >= minJumpCharge)
             {
-                Debug.Log("Jumping!");  
+                //Debug.Log("Jumping!");  
                 Vector3 jumpVector = (playerMainBody.transform.forward * jumpPower) * jumpChargeAmount;
                 Debug.DrawRay(playerMainBody.transform.position, jumpVector, Color.red);
                 playerMainBody.AddForce(jumpVector, ForceMode.Impulse);   

@@ -23,7 +23,7 @@ public class ParentFSM : FiniteStateMachine
     }
     protected override void OnUpdate()
     {
-        Debug.Log("Current State: " + currentState);
+        //Debug.Log("Current State: " + currentState);
         base.OnUpdate();
     }
     bool endChase()

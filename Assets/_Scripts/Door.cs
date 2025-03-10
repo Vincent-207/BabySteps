@@ -11,6 +11,7 @@ public class Door : MonoBehaviour
     float timeToWin;
     [SerializeField]
     int nextSceneIndex = -1;
+    public static int firstLevelBuildIndex = 2;
     void Start()
     {
         startTime = Time.time;
@@ -28,12 +29,12 @@ public class Door : MonoBehaviour
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             if(currentSceneIndex == SceneManager.sceneCountInBuildSettings -1)
             {
-                currentSceneIndex = -1;
+                currentSceneIndex = firstLevelBuildIndex - 1;
             }
             SceneManager.LoadScene(currentSceneIndex + 1);
         }
         else{
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(firstLevelBuildIndex);
         }
     }
 

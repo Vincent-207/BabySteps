@@ -59,7 +59,6 @@ public class PlayerDetector : MonoBehaviour
     }
     private void detectedPlayer(Collider playerCol)
     {
-        Debug.DrawLine(transform.position, playerCol.transform.position, Color.yellow, 50f);
         lastSeenPlayerPos = playerCol.transform.position;
         lastDetectedPlayerTime = Time.time;
         //Debug.Log("Saw player!");
@@ -91,6 +90,7 @@ public class PlayerDetector : MonoBehaviour
     private bool isPlayerViewable(Collider other)
     {
         bool isViewBlocked = Physics.Linecast(transform.position + eyePos, other.transform.position, viewBlockingLayers);
+        Debug.DrawLine(transform.position + eyePos, other.transform.position, Color.yellow, 50f);
         if(isViewBlocked)
         {
             canSeePlayer = false;

@@ -37,6 +37,7 @@ public class CatchState : State
             lastSeenPlayerPos = accurateLastSeen;
             navAgent.SetDestination(lastSeenPlayerPos);
         }
+        
         base.OnUpdate();
     }
     protected override void OnExit()
