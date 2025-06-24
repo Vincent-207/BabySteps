@@ -9,10 +9,14 @@ public class BoostPlayerController : MonoBehaviour
     public GameObject leftArm, rightArm;
     public float armTurnPower, rollPower;
     public ForceMode armForceMode, bodyForceMode;
+    KeyCode leftArmForward, leftArmBackward, rightArmForward, rightArmBackward;
     // Start is called before the first frame update
     void Start()
     {
-        
+        leftArmForward = (KeyCode) PlayerPrefs.GetInt("Left Arm Forward");
+        leftArmBackward = (KeyCode) PlayerPrefs.GetInt("Left Arm Backward");
+        rightArmForward = (KeyCode) PlayerPrefs.GetInt("Right Arm Forward");
+        rightArmBackward = (KeyCode) PlayerPrefs.GetInt("Right Arm Backward");
     }
 
     // Update is called once per frame
@@ -25,19 +29,19 @@ public class BoostPlayerController : MonoBehaviour
 
     void HandleArmInput()
     {
-        if(Input.GetKey(KeyCode.Q))
+        if(Input.GetKey(leftArmForward))
         {
             leftArmRB.AddRelativeTorque(armTurnDir * armTurnPower, armForceMode);
         }
-        else if(Input.GetKey(KeyCode.A))
+        else if(Input.GetKey(leftArmBackward))
         {
             leftArmRB.AddRelativeTorque(armTurnDir * -armTurnPower, armForceMode);
         }
-        if(Input.GetKey(KeyCode.W))
+        if(Input.GetKey(rightArmForward))
         {
             rightArmRB.AddRelativeTorque(armTurnDir * armTurnPower, armForceMode);
         }
-        else if(Input.GetKey(KeyCode.S))
+        else if(Input.GetKey(rightArmBackward))
         {
             rightArmRB.AddRelativeTorque(armTurnDir * -armTurnPower, armForceMode);
         }

@@ -50,6 +50,7 @@ public class CameraManager : MonoBehaviour
     int getClosestCam()
     {
         int lowestLengthIndex = 0;
+        // Debug.Log("PLayer pos: " + player.position);
         float lowestSqrDistance = (player.position - cameras[0].transform.position).sqrMagnitude;
         for(int index = 0; index < cameras.Length; index++)
         {
@@ -63,6 +64,7 @@ public class CameraManager : MonoBehaviour
             }
         }
 
+        // Debug.Log("Getting closest cam(" + lowestLengthIndex + ")!");
         return lowestLengthIndex;
     }
 }

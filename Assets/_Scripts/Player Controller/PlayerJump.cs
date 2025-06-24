@@ -12,6 +12,8 @@ public class PlayerJump : MonoBehaviour
     [SerializeField]
     Rigidbody playerMainBody;
     float jumpChargeAmount, lastJumpTime = 0;
+    [SerializeField]
+    PlayerAudioManager playerAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,17 +37,24 @@ public class PlayerJump : MonoBehaviour
             //Debug.Log("checking jump!");
             if(jumpChargeAmount >= minJumpCharge)
             {
-                //Debug.Log("Jumping!");  
-                Vector3 jumpVector = (playerMainBody.transform.forward * jumpPower) * jumpChargeAmount;
-                Debug.DrawRay(playerMainBody.transform.position, jumpVector, Color.red);
-                playerMainBody.AddForce(jumpVector, ForceMode.Impulse);   
-                lastJumpTime = Time.time;
+                Jump();
             }
             
             jumpChargeAmount = 0;
 
         }
         
+    }
+
+    private void Jump()
+    {
+        //Debug.Log("Jumping!");  
+        Vector3 jumpVector = (playerMainBody.transform.forward * jumpPower) * jumpChargeAmount;
+        Debug.DrawRay(playerMainBody.transform.position, jumpVector, Color.red);
+        playerMainBody.AddForce(jumpVector, ForceMode.Impulse);   
+        lastJumpTime = Time.time;
+        
+        playerAudio.PlayJumpSound();
     }
 
     public float getJumpCharge()

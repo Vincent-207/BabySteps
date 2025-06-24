@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDetector : MonoBehaviour
@@ -13,12 +14,16 @@ public class PlayerDetector : MonoBehaviour
     MeshFilter meshFilter;
     MeshCollider viewCol;
     
+    [SerializeField]
+    AudioSource calm, action;
+
 
     // Chase variables
     static float lastDetectedPlayerTime = -5;
     public static float playerChaseTime = 5;
     public static Vector3 lastSeenPlayerPos = new Vector3();
     static bool canSeePlayer = false;
+    //int abba = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +36,19 @@ public class PlayerDetector : MonoBehaviour
         viewCol.sharedMesh = viewCone;
 
     }
-    
+    void Update()
+    {
+        if(Time.time >= lastDetectedPlayerTime + playerChaseTime)
+        {
+            calm.enabled = true;
+            action.enabled = false;
+        }   
+        else
+        {
+            calm.enabled = false;
+            action.enabled = true;
+        }
+    }
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Trigger entered by : " + other.name);
@@ -63,11 +80,12 @@ public class PlayerDetector : MonoBehaviour
         lastDetectedPlayerTime = Time.time;
         //Debug.Log("Saw player!");
     }
-
+   
     public static bool huntingPlayer()
     {
         if(Time.time < lastDetectedPlayerTime + playerChaseTime)
         {
+
             return true;
         }
         return false;
@@ -77,6 +95,7 @@ public class PlayerDetector : MonoBehaviour
     {
         if(huntingPlayer() && canSeePlayer == false)
         {
+            
             return true;
         }
         return false;
